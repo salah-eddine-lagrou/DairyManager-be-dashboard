@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('price_list_product_details', function (Blueprint $table) {
+        Schema::create('product_product_discount', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_discount_id')->nullable();
+            $table->foreign('product_discount_id')->references('id')->on('product_discounts')->onDelete('set null');
             $table->unsignedBigInteger('product_id')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
-            $table->unsignedBigInteger('price_list_id')->nullable();
-            $table->foreign('price_list_id')->references('id')->on('price_lists')->onDelete('set null');
-            $table->string('code')->unique();
-            $table->double('sale_price');
-            $table->double('return_price');
-            $table->date('valid_from');
-            $table->date('valid_to');
-            $table->boolean('closed');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('price_list_product_details');
+        Schema::dropIfExists('product_product_discount');
     }
 };

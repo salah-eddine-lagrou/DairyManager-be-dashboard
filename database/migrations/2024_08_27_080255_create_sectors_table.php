@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedBigInteger('zone_id')->nullable();
-            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
             $table->timestamps();
         });
     }

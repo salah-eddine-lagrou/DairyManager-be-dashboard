@@ -25,53 +25,25 @@ return new class extends Migration {
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('modified_by_id')->nullable();
             $table->foreign('modified_by_id')->references('id')->on('users')->onDelete('set null');
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles_created')->onDelete('cascade');
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
             $table->enum('status', ['actif', 'inactif']);
             $table->unsignedBigInteger('responsable_id')->nullable();
             $table->foreign('responsable_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('magasinier_id')->nullable();
             $table->foreign('magasinier_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('agency_id')->nullable();
-            $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('cascade');
+            $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('set null');
             $table->unsignedBigInteger('warehouse_id')->nullable();
-            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
+            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('set null');
             $table->unsignedBigInteger('zone_id')->nullable();
-            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
             $table->unsignedBigInteger('sector_id')->nullable();
-            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
+            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('set null');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('tournes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
-        Schema::create('tourne_vendeur', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('tourne_id')->nullable();
-            $table->foreign('tourne_id')->references('id')->on('tournes')->onDelete('set null');
-            $table->unsignedBigInteger('vendeur_id')->nullable();
-            $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('set null');
-            $table->boolean('owner');
-            $table->timestamps();
-        });
-
-        Schema::create('roles_created', function (Blueprint $table) {
-            $table->id();
-            $table->enum('role_name', ['admin', 'vendeur', 'responsable', 'magasinier']);
-            $table->text('description');
-            $table->timestamps();
-        });
-
-        Schema::create('permissions_created', function (Blueprint $table) {
-            $table->id();
-            $table->string('permission');
             $table->timestamps();
         });
 
@@ -97,10 +69,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('tournes');
-        Schema::dropIfExists('tourne_vendeur');
-        Schema::dropIfExists('roles_created');
-        Schema::dropIfExists('permissions_created');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

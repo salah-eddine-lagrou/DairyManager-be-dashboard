@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::create('batch_product_stock', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('name');
-            $table->text('description');
-            $table->unsignedBigInteger('warehouse_id')->nullable();
-            $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('set null');
+            $table->unsignedBigInteger('product_stock_id')->nullable();
+            $table->foreign('product_stock_id')->references('id')->on('product_stock')->onDelete('set null');
+            $table->double('measure_batches');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('zones');
+        Schema::dropIfExists('batch_product_stock');
     }
 };

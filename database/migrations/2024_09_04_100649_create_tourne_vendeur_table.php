@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('tourne_vendeur', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->double('total_totals');
-            $table->double('amount_total');
-            $table->unsignedBigInteger('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
+            $table->unsignedBigInteger('tourne_id')->nullable();
+            $table->foreign('tourne_id')->references('id')->on('tournes')->onDelete('set null');
             $table->unsignedBigInteger('vendeur_id')->nullable();
             $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('set null');
-            $table->enum('order_status', ['vente', 'commande', 'offert', 'retour']);
-            $table->enum('order_payment_status', ['payee', 'non-payee']);
+            $table->boolean('owner');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('tourne_vendeur');
     }
 };

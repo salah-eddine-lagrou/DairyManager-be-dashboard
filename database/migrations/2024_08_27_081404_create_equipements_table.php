@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->integer('quantity');
             $table->unsignedBigInteger('equipement_category_id')->nullable();
-            $table->foreign('equipement_category_id')->references('id')->on('equipement_categories')->onDelete('cascade');
+            $table->foreign('equipement_category_id')->references('id')->on('equipement_categories')->onDelete('set null');
             $table->enum('equipement_state', ['confort', 'bon-etat-mais-vide', 'mal-presente', 'autres-produits']);
             $table->timestamps();
         });

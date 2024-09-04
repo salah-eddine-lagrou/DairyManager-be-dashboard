@@ -9,7 +9,7 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $table = 'roles_created';
+    protected $table = 'roles';
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +34,6 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'role_id');
     }
 }

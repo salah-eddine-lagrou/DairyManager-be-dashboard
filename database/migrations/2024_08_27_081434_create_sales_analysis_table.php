@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sales_analysis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendeur_id')->nullable();
-            $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('set null');
             $table->string('period');
             $table->double('total_sales');
             $table->double('total_returns');

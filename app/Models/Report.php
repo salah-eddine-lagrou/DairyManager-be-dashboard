@@ -24,6 +24,6 @@ class Report extends Model
 
     public function report_type()
     {
-        return $this->belongsTo(ReportType::class);
+        return $this->belongsTo(ReportType::class, 'report_type_id');
     }
 }
