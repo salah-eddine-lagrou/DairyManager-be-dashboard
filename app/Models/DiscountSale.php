@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class DiscountSale extends Model
 {
     use HasFactory;
+
+    protected $table = 'discount_sales';
+
+    protected $fillable = [
+        'code',
+        'discount',
+        'discount_type'
+    ];
+
+    public function clientSales()
+    {
+        return $this->hasMany(ClientSale::class);
+    }
 }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('discount_sales', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
+            $table->decimal('discount');
+            $table->enum('discount_type', ['permanent-discounts', 'periodic-discounts']);
             $table->timestamps();
         });
     }

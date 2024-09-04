@@ -13,6 +13,41 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->text('description');
+            $table->unsignedBigInteger('created_by_id')->nullable();
+            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('set null');
+            $table->unsignedBigInteger('modified_by_id')->nullable();
+            $table->foreign('modified_by_id')->references('id')->on('users')->onDelete('set null');
+            $table->unsignedBigInteger('product_subcategory_id')->nullable();
+            $table->foreign('product_subcategory_id')->references('id')->on('product_subcategories')->onDelete('set null');
+            $table->unsignedBigInteger('unit_id')->nullable();
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null');
+            $table->double('wieght');
+            $table->double('measure');
+            $table->double('price_ht');
+            $table->unsignedBigInteger('tax_id')->nullable();
+            $table->foreign('tax_id')->references('id')->on('tva')->onDelete('set null');
+            $table->double('price_ttc');
+            $table->enum('status', ['actif', 'inactif']);
+            $table->unsignedBigInteger('product_stock_status_id')->nullable();
+            $table->foreign('product_stock_status_id')->references('id')->on('product_stock_status')->onDelete('set null');
+            $table->unsignedBigInteger('batch_product_id')->nullable();
+            $table->foreign('batch_product_id')->references('id')->on('batch_products')->onDelete('set null');
+            $table->text('image');
+            $table->timestamps();
+        });
+
+        Schema::create('batch_products', function (Blueprint $table) {
+            $table->id();
+            $table->double('measure');
+            $table->double('weight');
+            $table->double('batch_product_price');
+            $table->unsignedBigInteger('batch_unit_id')->nullable();
+            $table->foreign('batch_unit_id')->references('id')->on('units')->onDelete('set null');
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -23,5 +58,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('products');
+        Schema::dropIfExists('product_stock_status');
     }
 };

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tva', function (Blueprint $table) {
             $table->id();
+            $table->integer('tva');
+            $table->text('description');
             $table->timestamps();
         });
     }

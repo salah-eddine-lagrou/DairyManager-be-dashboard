@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientCategory extends Model
+class ProductCategory extends Model
 {
     use HasFactory;
 
-    protected $table = 'client_categories';
+    protected $table = 'product_categories';
 
     protected $fillable = [
-        'name',
         'code',
+        'name',
         'description'
     ];
 
     public function subcategories()
     {
-        return $this->hasMany(ClientSubcategory::class);
+        return $this->hasMany(ProductSubcategory::class, 'product_category_id');
     }
 }

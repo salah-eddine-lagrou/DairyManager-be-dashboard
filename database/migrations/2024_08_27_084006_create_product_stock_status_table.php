@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_stock_status', function (Blueprint $table) {
             $table->id();
+            $table->string('status');
+            $table->text('description');
             $table->timestamps();
         });
     }

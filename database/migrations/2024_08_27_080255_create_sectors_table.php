@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->text('description');
+            $table->unsignedBigInteger('zone_id')->nullable();
+            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
             $table->timestamps();
         });
     }

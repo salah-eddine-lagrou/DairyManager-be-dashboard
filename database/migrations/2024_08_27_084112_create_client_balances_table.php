@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('client_balances', function (Blueprint $table) {
             $table->id();
+            $table->double('balance_amount');
+            $table->double('bl_amount');
+            $table->double('credit_note_amount');
+            $table->double('unpaid_amount');
+            $table->text('description');
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
             $table->timestamps();
         });
     }

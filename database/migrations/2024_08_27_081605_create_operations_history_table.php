@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('operations_history', function (Blueprint $table) {
             $table->id();
+            $table->string('operation_type');
+            $table->string('operation_details');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

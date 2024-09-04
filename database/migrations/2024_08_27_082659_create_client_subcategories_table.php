@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('client_subcategories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('code')->unique();
+            $table->text('description');
+            $table->unsignedBigInteger('client_categorie_id')->nullable();
+            $table->foreign('client_categorie_id')->references('id')->on('client_categories')->onDelete('set null');
             $table->timestamps();
         });
     }

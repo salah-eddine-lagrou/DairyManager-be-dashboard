@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('price_lists', function (Blueprint $table) {
             $table->id();
+            $table->integer('rank');
+            $table->string('code')->unique();
+            $table->text('description');
+            $table->enum('price_list_name', ['direct', 'demi-gros', 'grossite', 'mensuel']);
             $table->timestamps();
         });
     }
