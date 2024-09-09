@@ -40,6 +40,6 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class, 'client_sales')
                     ->using(ClientSale::class)
-                    ->withPivot('total', 'measure', 'sale_date', 'discount_sale_id', 'price_list_product_details_id');
+                    ->withPivot('total', 'measure_items', 'total_measures', 'sale_date', 'discount_sale_id', 'price_list_product_details_id', 'batch_product_client_sale_id');
     }
 }

@@ -13,7 +13,8 @@ class ClientSale extends Model
 
     protected $fillable = [
         'total',
-        'measure',
+        'measure_items',
+        'total_measures',
         'sale_date',
         'product_id',
         'order_id',

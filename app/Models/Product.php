@@ -63,7 +63,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Stock::class, 'product_stock')
                     ->using(ProductStock::class)
-                    ->withPivot('unit_id', 'measure');
+                    ->withPivot('product_stock_status', 'batch_product_stock_id', 'approved_status', 'responsable_measure', 'magasinier_measure', 'measure_items', 'total_measures');
     }
 
     public function priceLists()
@@ -77,7 +77,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class, 'client_sales')
                     ->using(ClientSale::class)
-                    ->withPivot('total', 'measure', 'sale_date', 'discount_sale_id', 'price_list_product_details_id');
+                    ->withPivot('total', 'measure_items', 'total_measures', 'sale_date', 'discount_sale_id', 'price_list_product_details_id', 'batch_product_client_sale_id');
     }
 
     public function batchProduct()

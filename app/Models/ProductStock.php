@@ -16,6 +16,9 @@ class ProductStock extends Model
         'product_id',
         'product_stock_status',
         'batch_product_stock_id',
+        'approved_status',
+        'responsable_measure',
+        'magasinier_measure',
         'measure_items',
         'total_measures'
     ];

@@ -14,6 +14,7 @@ class Unit extends Model
     protected $fillable = [
         'name',
         'description',
+        'unit_category'
     ];
 
     public function products()

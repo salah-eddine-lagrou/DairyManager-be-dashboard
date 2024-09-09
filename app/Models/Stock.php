@@ -42,7 +42,7 @@ class Stock extends Model
     {
         return $this->belongsToMany(Product::class, 'product_stock')
                     ->using(ProductStock::class)
-                    ->withPivot('product_stock_status', 'batch_product_stock_id', 'measure_items', 'total_measures');
+                    ->withPivot('product_stock_status', 'batch_product_stock_id', 'approved_status', 'responsable_measure', 'magasinier_measure', 'measure_items', 'total_measures');
     }
 
     public function requests()

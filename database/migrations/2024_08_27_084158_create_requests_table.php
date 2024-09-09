@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreign('responsable_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('magasinier_id')->nullable();
             $table->foreign('magasinier_id')->references('id')->on('users')->onDelete('set null');
-            $table->enum('status_request', ['valid', 'en-attente', 'refus']);
+            $table->enum('status_request', ['valid', 'en-attente', 'refus'])->default('en-attente');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
             $table->unsignedBigInteger('stock_id')->nullable();
