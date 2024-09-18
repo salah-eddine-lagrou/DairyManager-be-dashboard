@@ -110,6 +110,7 @@ class Client extends Model
 
     public function equipements()
     {
-        return $this->belongsToMany(Equipement::class, 'client_id');
+        return $this->belongsToMany(Equipement::class, 'client_equipement', 'client_id', 'equipement_id');
     }
+
 }

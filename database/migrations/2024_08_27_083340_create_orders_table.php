@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->double('total_totals');
-            $table->double('amount_total');
+            $table->float('total_totals');
+            $table->float('amount_total');
             $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
             $table->unsignedBigInteger('vendeur_id')->nullable();

@@ -24,8 +24,10 @@ class Equipement extends Model
         return $this->belongsTo(EquipementCategory::class, 'equipement_category_id');
     }
 
-    public function client()
+    public function clients()
     {
-        return $this->belongsToMany(Client::class, 'equipement_id');
+        return $this->belongsToMany(Client::class, 'client_equipement', 'equipement_id', 'client_id');
     }
+
+
 }

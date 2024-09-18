@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\TourneVendeur;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -151,6 +152,20 @@ class UserController extends Controller
             // Create the new vendeur user
             $user = User::create($validated);
 
+            $tourneController = new TourneController();
+            $response = $tourneController->store();
+            $responseData = json_decode($response->getContent(), true);
+
+            if ($responseData['success']) {
+                $tourneId = $responseData['data']['id'];
+                TourneVendeur::create([
+                    'tourne_id' => $tourneId,
+                    'vendeur_id' => $user->id,
+                    'owner' => true,
+                    'status' => 'actif'
+                ]);
+            }
+
             // Return a success response
             return response()->json([
                 'success' => true,
@@ -171,6 +186,9 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    // this function will assing the tourne to a vendeur user as modifier function PUT
+    public function assignTourneToVendeur() {}
 
     public function storeResponsable(Request $request)
     {

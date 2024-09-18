@@ -14,7 +14,8 @@ class TourneVendeur extends Model
     protected $fillable = [
         'tourne_id',
         'vendeur_id',
-        'owner'
+        'owner',
+        'status'
     ];
 
     public function tourne()

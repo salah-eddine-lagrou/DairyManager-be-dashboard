@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_stock_id')->nullable();
             $table->foreign('product_stock_id')->references('id')->on('product_stock')->onDelete('set null');
-            $table->double('measure_batches');
+            $table->float('responsable_measure_batches')->nullable();
+            $table->float('magasinier_measure_batches')->nullable();
+            $table->float('measure_batches')->nullable();
             $table->timestamps();
         });
     }

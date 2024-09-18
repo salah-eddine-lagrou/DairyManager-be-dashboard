@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('price_list_id')->nullable();
             $table->foreign('price_list_id')->references('id')->on('price_lists')->onDelete('set null');
             $table->string('code')->unique();
-            $table->double('sale_price');
-            $table->double('return_price');
+            $table->float('sale_price');
+            $table->float('return_price');
             $table->date('valid_from');
             $table->date('valid_to');
             $table->boolean('closed');

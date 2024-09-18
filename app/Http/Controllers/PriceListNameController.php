@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EquipementCategory;
+use App\Models\PriceListName;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
-class EquipementCategoryController extends Controller
+class PriceListNameController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,22 +13,20 @@ class EquipementCategoryController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         try {
-            $categories = EquipementCategory::all();
+            $priceListNames = PriceListName::all();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Equipement categories retrieved successfully.',
-                'data' => $categories
+                'data' => $priceListNames
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while retrieving categories.',
+                'message' => 'Failed to fetch price list names.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -46,18 +43,16 @@ class EquipementCategoryController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => 'required|string|unique:price_list_names,name',
                 'description' => 'nullable|string',
             ]);
 
-            $validated['code'] = $this->generateUniqueCode();
-
-            $category = EquipementCategory::create($validated);
+            $priceListName = PriceListName::create($validated);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Equipement category created successfully.',
-                'data' => $category
+                'message' => 'Price list name created successfully.',
+                'data' => $priceListName
             ], 201);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
@@ -68,30 +63,11 @@ class EquipementCategoryController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while creating the category.',
+                'message' => 'An error occurred while creating the price list name.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-
-    private function generateUniqueCode()
-    {
-        $prefix = "EC";
-
-        $latestCode = EquipementCategory::where('code', 'like', $prefix . '%')
-            ->orderBy('code', 'desc')
-            ->pluck('code')
-            ->first();
-
-        if ($latestCode) {
-            $number = (int) substr($latestCode, strlen($prefix)) + 1;
-        } else {
-            $number = 1;
-        }
-
-        return $prefix . str_pad($number, 5, '0', STR_PAD_LEFT);
-    }
-
 
     /**
      * Display the specified resource.
@@ -99,28 +75,26 @@ class EquipementCategoryController extends Controller
     public function show($id): \Illuminate\Http\JsonResponse
     {
         try {
-            $category = EquipementCategory::findOrFail($id);
+            $priceListName = PriceListName::findOrFail($id);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Equipement category retrieved successfully.',
-                'data' => $category
+                'data' => $priceListName
             ], 200);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Category not found.',
+                'message' => 'Price list name not found.',
                 'error' => $e->getMessage()
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while retrieving the category.',
+                'message' => 'An error occurred while fetching the price list name.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -136,26 +110,19 @@ class EquipementCategoryController extends Controller
     public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         try {
-            $category = EquipementCategory::findOrFail($id);
+            $priceListName = PriceListName::findOrFail($id);
 
             $validated = $request->validate([
-                'code' => [
-                    'sometimes',
-                    'required',
-                    'string',
-                    'max:255',
-                    Rule::unique('equipement_categories')->ignore($category->id),
-                ],
-                'name' => 'sometimes|required|string|max:255',
+                'name' => 'sometimes|required|string|unique:price_list_names,name,' . $priceListName->id,
                 'description' => 'sometimes|nullable|string',
             ]);
 
-            $category->update($validated);
+            $priceListName->update($validated);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Equipement category updated successfully.',
-                'data' => $category
+                'message' => 'Price list name updated successfully.',
+                'data' => $priceListName
             ], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
@@ -166,18 +133,17 @@ class EquipementCategoryController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Category not found.',
+                'message' => 'Price list name not found.',
                 'error' => $e->getMessage()
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while updating the category.',
+                'message' => 'An error occurred while updating the price list name.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -185,26 +151,25 @@ class EquipementCategoryController extends Controller
     public function destroy($id): \Illuminate\Http\JsonResponse
     {
         try {
-            $category = EquipementCategory::findOrFail($id);
-            $category->delete();
+            $priceListName = PriceListName::findOrFail($id);
+            $priceListName->delete();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Equipement category deleted successfully.'
+                'message' => 'Price list name deleted successfully.'
             ], 200);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Category not found.',
+                'message' => 'Price list name not found.',
                 'error' => $e->getMessage()
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while deleting the category.',
+                'message' => 'An error occurred while deleting the price list name.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-
 }

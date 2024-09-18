@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->text('description');
-            $table->unsignedBigInteger('client_categorie_id')->nullable();
-            $table->foreign('client_categorie_id')->references('id')->on('client_categories')->onDelete('set null');
+            $table->unsignedBigInteger('client_category_id')->nullable();
+            $table->foreign('client_category_id')->references('id')->on('client_categories')->onDelete('set null');
             $table->timestamps();
         });
     }

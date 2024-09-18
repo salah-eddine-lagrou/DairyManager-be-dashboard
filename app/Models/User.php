@@ -116,7 +116,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Tourne::class, 'tourne_vendeur')
             ->using(TourneVendeur::class)
-            ->withPivot('owner');
+            ->withPivot('owner', 'status');
     }
 
     // Responsable has many Vendeurs

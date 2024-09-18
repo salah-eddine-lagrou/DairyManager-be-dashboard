@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('vendeur_id')->nullable();
             $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('set null');
             $table->string('period');
-            $table->double('total_sales');
-            $table->double('total_returns');
-            $table->double('total_discounts');
-            $table->double('net_sales');
+            $table->float('total_sales')->nullable();
+            $table->float('total_returns')->nullable();
+            $table->float('total_discounts')->nullable();
+            $table->float('net_sales')->nullable();
             $table->timestamps();
         });
     }

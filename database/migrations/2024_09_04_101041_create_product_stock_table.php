@@ -21,10 +21,10 @@ return new class extends Migration
             $table->unsignedBigInteger('batch_product_stock_id')->nullable();
             $table->foreign('batch_product_stock_id')->references('id')->on('batch_product_stock')->onDelete('set null');
             $table->enum('approved_status', ['en-attente', 'approuve', 'non-approve'])->default('en-attente');
-            $table->double('responsable_measure');
-            $table->double('magasinier_measure');
-            $table->double('measure_items');
-            $table->double('total_measures');
+            $table->float('responsable_measure')->nullable();
+            $table->float('magasinier_measure')->nullable();
+            $table->float('measure_items');
+            $table->float('total_measures');
             $table->timestamps();
         });
     }

@@ -15,11 +15,11 @@ return new class extends Migration {
             $table->string('code')->unique();
             $table->string('name');
             $table->string('phone');
-            $table->double('plafond_vendeur')->nullable();
+            $table->float('plafond_vendeur')->nullable();
             $table->string('pda_code_access')->unique()->nullable();
-            $table->string('printer_code')->unique()->nullable();
+            $table->string('printer_code')->nullable();
             $table->boolean('non_tolerated_sales_block')->nullable();
-            $table->double('credit_limit')->nullable();
+            $table->float('credit_limit')->nullable();
             $table->string('username')->unique();
             $table->unsignedBigInteger('created_by_id')->nullable();
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('set null');

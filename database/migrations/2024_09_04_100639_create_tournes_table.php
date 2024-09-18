@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tournes', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['actif', 'inactif']);
             $table->timestamps();
         });
     }

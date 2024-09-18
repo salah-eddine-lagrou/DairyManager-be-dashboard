@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('client_sales', function (Blueprint $table) {
             $table->id();
-            $table->double('total');
-            $table->double('measure_items');
-            $table->double('total_measures');
+            $table->float('total');
+            $table->float('measure_items');
+            $table->float('total_measures');
             $table->date('sale_date');
             $table->unsignedBigInteger('product_id')->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');

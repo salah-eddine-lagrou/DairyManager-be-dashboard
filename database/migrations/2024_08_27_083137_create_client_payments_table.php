@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('client_payments', function (Blueprint $table) {
             $table->id();
-            $table->double('amount');
+            $table->float('amount');
             $table->date('transaction_date');
             $table->enum('payment_method', ['avoir', 'especes', 'cheque', 'virement', 'versement', 'effet']);
             $table->enum('transaction_type', ['paiement', 'acompte']);
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('set null');
             $table->string('code');
             $table->string('payment_period');
-            $table->double('discount');
+            $table->float('discount');
             $table->text('notes');
             $table->timestamps();
         });

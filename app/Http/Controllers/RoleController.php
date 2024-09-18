@@ -76,6 +76,33 @@ class RoleController extends Controller
         }
     }
 
+    // Sync permissions with roles
+    public function syncPermissions(Request $request): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'role_ids' => 'required|array',
+                'role_ids.*' => 'exists:roles,id', // Ensure all role IDs exist in the 'roles' table
+                'permission_ids' => 'required|array',
+                'permission_ids.*' => 'exists:permissions_created,id', // Ensure all permission IDs exist in the 'permissions_created' table
+            ]);
+
+            // Sync permissions with all roles provided
+            foreach ($validated['role_ids'] as $roleId) {
+                $role = Role::findOrFail($roleId);
+                $role->permissions()->sync($validated['permission_ids']);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Permissions successfully synced with the roles.'], 200);
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'One or more roles or permissions not found.'], 404);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An error occurred while syncing permissions with roles.', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 
     /**
      * Display the specified resource.

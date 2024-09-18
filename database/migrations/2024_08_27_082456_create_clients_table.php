@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->string('qr_client')->unique();
+            $table->string('qr_client')->unique()->nullable();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('ice');
+            $table->string('ice')->unique()->nullable();
             $table->string('city');
             $table->unsignedBigInteger('agency_id')->nullable();
             $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('set null');
@@ -32,16 +32,16 @@ return new class extends Migration
             $table->string('contact_name');
             $table->string('phone');
             $table->string('address');
-            $table->boolean('tour_assignment_commercial');
-            $table->boolean('client_assignment_commercial');
+            $table->boolean('tour_assignment_commercial')->nullable();
+            $table->boolean('client_assignment_commercial')->nullable();
             $table->unsignedBigInteger('price_list_id')->nullable();
             $table->foreign('price_list_id')->references('id')->on('price_lists')->onDelete('set null');
             // ! deleted $table->enum('circuit_distribution', ['direct', 'demi-gros', 'gros']); we could achieve this by the pricelist table
             // TODO payment_terms
             // TODO client_balance
-            $table->double('credit_limit');
-            $table->double('credit_note_balance');
-            $table->double('global_limit');
+            $table->float('credit_limit');
+            $table->float('credit_note_balance');
+            $table->float('global_limit');
             $table->string('location');
             $table->string('location_gps_coordinates');
             $table->enum('visit', ['oui', 'non']);
@@ -51,7 +51,7 @@ return new class extends Migration
             $table->foreign('created_by_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedBigInteger('modified_by_id')->nullable();
             $table->foreign('modified_by_id')->references('id')->on('users')->onDelete('set null');
-            $table->enum('status', ['actif', 'inactif']);
+            $table->enum('status', ['en-attente', 'actif', 'inactif']);
             $table->unsignedBigInteger('tourne_id')->nullable();
             $table->foreign('tourne_id')->references('id')->on('tournes')->onDelete('set null');
             $table->timestamps();

@@ -24,12 +24,12 @@ return new class extends Migration
             $table->foreign('product_subcategory_id')->references('id')->on('product_subcategories')->onDelete('set null');
             $table->unsignedBigInteger('unit_id')->nullable();
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null');
-            $table->double('wieght');
-            $table->double('measure');
-            $table->double('price_ht');
+            $table->float('wieght');
+            $table->float('measure');
+            $table->float('price_ht');
             $table->unsignedBigInteger('tax_id')->nullable();
             $table->foreign('tax_id')->references('id')->on('tva')->onDelete('set null');
-            $table->double('price_ttc');
+            $table->float('price_ttc');
             $table->enum('status', ['actif', 'inactif']);
             $table->unsignedBigInteger('product_stock_status_id')->nullable();
             $table->foreign('product_stock_status_id')->references('id')->on('product_stock_status')->onDelete('set null');

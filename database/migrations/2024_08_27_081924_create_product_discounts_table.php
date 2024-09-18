@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_discounts', function (Blueprint $table) {
             $table->id();
-            $table->double('discount_rate');
+            $table->float('discount_rate');
             $table->string('discount_type');
             $table->date('start_date');
             $table->date('end_date');

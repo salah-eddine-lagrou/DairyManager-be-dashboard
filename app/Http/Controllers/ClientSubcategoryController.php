@@ -52,7 +52,7 @@ class ClientSubcategoryController extends Controller
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'required|string',
-                'client_categorie_id' => 'nullable|exists:client_categories,id',
+                'client_category_id' => 'nullable|exists:client_categories,id',
             ]);
 
             // Generate the unique code for the client subcategory
@@ -153,7 +153,7 @@ class ClientSubcategoryController extends Controller
             $validated = $request->validate([
                 'name' => 'sometimes|required|string|max:255',
                 'description' => 'sometimes|required|string',
-                'client_categorie_id' => 'nullable|exists:client_categories,id',
+                'client_category_id' => 'nullable|exists:client_categories,id',
                 'code' => [
                     'sometimes',
                     'required',

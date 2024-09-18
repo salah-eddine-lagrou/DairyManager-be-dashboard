@@ -15,10 +15,10 @@ class PriceList extends Model
         'code',
         'rank',
         'description',
-        'price_list_name'
+        'price_list_name_id'
     ];
 
-    public function clients()
+    public function clients(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Client::class);
     }
@@ -28,5 +28,10 @@ class PriceList extends Model
         return $this->belongsToMany(Product::class, 'price_list_product_details')
                     ->using(ProductStock::class)
                     ->withPivot('code', 'sale_price', 'return_price', 'valid_from', 'valid_to', 'closed');
+    }
+
+    public function priceListName(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PriceListName::class, 'price_list_name_id');
     }
 }

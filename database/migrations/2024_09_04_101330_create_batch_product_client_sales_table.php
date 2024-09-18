@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('batch_product_client_sales', function (Blueprint $table) {
             $table->id();
-            $table->double('measure_batches');
+            $table->float('measure_batches');
             $table->unsignedBigInteger('client_sale_id')->nullable();
             $table->foreign('client_sale_id')->references('id')->on('client_sales')->onDelete('set null');
             $table->timestamps();

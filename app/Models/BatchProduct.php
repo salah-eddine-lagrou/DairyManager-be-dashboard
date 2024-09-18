@@ -12,8 +12,9 @@ class BatchProduct extends Model
     protected $table = 'batch_products';
 
     protected $fillable = [
-        'measure',
-        'weight',
+        'measure_batch',
+        'measure_items',
+        'weight_batch',
         'batch_product_price',
         'batch_unit_id',
         'product_id'

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('batch_products', function (Blueprint $table) {
             $table->id();
-            $table->double('measure');
-            $table->double('weight');
-            $table->double('batch_product_price');
+            $table->float('measure_batch');
+            $table->float('measure_items');
+            $table->float('weight_batch');
+            $table->float('batch_product_price');
             $table->unsignedBigInteger('batch_unit_id')->nullable();
             $table->foreign('batch_unit_id')->references('id')->on('units')->onDelete('set null');
             $table->unsignedBigInteger('product_id')->nullable();

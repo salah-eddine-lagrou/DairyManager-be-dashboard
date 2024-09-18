@@ -15,12 +15,12 @@ class ClientSubcategory extends Model
         'name',
         'code',
         'description',
-        'client_categorie_id'
+        'client_category_id'
     ];
 
     public function client_category()
     {
-        return $this->belongsTo(ClientCategory::class, 'client_categorie_id', 'id');
+        return $this->belongsTo(ClientCategory::class, 'client_category_id', 'id');
     }
 
     public function clients()

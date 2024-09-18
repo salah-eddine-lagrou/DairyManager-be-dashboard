@@ -11,13 +11,15 @@ class Tourne extends Model
 
     protected $table = 'tournes';
 
-    protected $fillable = [];
+    protected $fillable = [
+        'status'
+    ];
 
     public function vendeurs()
     {
         return $this->belongsToMany(User::class, 'tourne_vendeur')
                     ->using(TourneVendeur::class)
-                    ->withPivot('owner');
+                    ->withPivot('owner', 'status');
     }
 
     public function clients()

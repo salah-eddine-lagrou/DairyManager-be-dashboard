@@ -13,6 +13,8 @@ class BatchProductStock extends Model
 
     protected $fillable = [
         'product_stock_id',
+        'responsable_measure_batches',
+        'magasinier_measure_batches',
         'measure_batches'
     ];
 

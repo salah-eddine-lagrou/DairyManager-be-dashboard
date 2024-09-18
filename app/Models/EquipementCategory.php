@@ -12,7 +12,8 @@ class EquipementCategory extends Model
     protected $table = 'equipement_categories';
 
     protected $fillable = [
-        'category_name',
+        'code',
+        'name',
         'description',
     ];
 

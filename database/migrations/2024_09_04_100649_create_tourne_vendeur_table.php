@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('vendeur_id')->nullable();
             $table->foreign('vendeur_id')->references('id')->on('users')->onDelete('set null');
             $table->boolean('owner');
+            $table->enum('status', ['actif', 'inactif']);
             $table->timestamps();
         });
     }
