@@ -12,7 +12,7 @@ class TourneController extends Controller
      * Display a listing of the resource.
      * TODO in API url
      */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
         try {
             $tournes = Tourne::all();
@@ -44,7 +44,7 @@ class TourneController extends Controller
      * Store a newly created resource in storage.
      * ! removed the request we don't need it
      */
-    public function store()
+    public function store(): \Illuminate\Http\JsonResponse
     {
         try {
             // Create new Tourne
@@ -69,7 +69,7 @@ class TourneController extends Controller
      * Display the specified resource.
      * TODO in API url
      */
-    public function show($id)
+    public function show($id): \Illuminate\Http\JsonResponse
     {
         try {
             $tourne = Tourne::findOrFail($id);
@@ -106,7 +106,7 @@ class TourneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         try {
             // Validate input
@@ -145,7 +145,7 @@ class TourneController extends Controller
     }
 
     // TODO in API url
-    public function setActive($id)
+    public function setActive($id): \Illuminate\Http\JsonResponse
     {
         try {
             $tourne = Tourne::findOrFail($id);
@@ -173,7 +173,7 @@ class TourneController extends Controller
     }
 
     // TODO in API url
-    public function setInactive($id)
+    public function setInactive($id): \Illuminate\Http\JsonResponse
     {
         try {
             // Find the Tourne record
@@ -212,7 +212,7 @@ class TourneController extends Controller
      * Remove the specified resource from storage.
      * TODO in API url
      */
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\JsonResponse
     {
         try {
             $tourne = Tourne::findOrFail($id);
