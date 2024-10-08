@@ -74,8 +74,6 @@ class UserController extends Controller
                 'magasinier_id' => 'nullable|exists:users,id',
                 'agency_id' => 'nullable|exists:agencies,id',
                 'warehouse_id' => 'nullable|exists:warehouses,id',
-                'zone_id' => 'nullable|exists:zones,id',
-                'sector_id' => 'nullable|exists:sectors,id',
             ]);
 
             // Hash the password
@@ -113,6 +111,7 @@ class UserController extends Controller
     }
 
     // TODO review the store function for other roles while creating the dashbord (backeoffice)
+    // TODO users of the pda should be created with status inactif for auth process
     public function storeVendeur(Request $request)
     {
         try {
@@ -134,8 +133,6 @@ class UserController extends Controller
                 'magasinier_id' => 'nullable|exists:users,id',
                 'agency_id' => 'required|exists:agencies,id',
                 'warehouse_id' => 'required|exists:warehouses,id',
-                'zone_id' => 'required|exists:zones,id',
-                'sector_id' => 'required|exists:sectors,id',
             ]);
 
             // Hash the password
@@ -145,9 +142,8 @@ class UserController extends Controller
             $vendeurRole = Role::where('role_name', 'vendeur')->firstOrFail();
             $validated['role_id'] = $vendeurRole->id;
 
-            // Generate a unique code with the vendeur prefix and pda code access
+            // Generate a unique code with the vendeur prefix
             $validated['code'] = $this->generateUniqueCode($vendeurRole->prefix);
-            $validated['pda_code_access'] = $this->generatePDACodeAccess();
 
             // Create the new vendeur user
             $user = User::create($validated);
@@ -211,8 +207,6 @@ class UserController extends Controller
                 'magasinier_id' => 'required|exists:users,id',
                 'agency_id' => 'required|exists:agencies,id',
                 'warehouse_id' => 'required|exists:warehouses,id',
-                'zone_id' => 'required|exists:zones,id',
-                'sector_id' => 'required|exists:sectors,id',
             ]);
 
             // Hash the password
@@ -270,8 +264,6 @@ class UserController extends Controller
                 'magasinier_id' => 'nullable|exists:users,id',
                 'agency_id' => 'required|exists:agencies,id',
                 'warehouse_id' => 'required|exists:warehouses,id',
-                'zone_id' => 'required|exists:zones,id',
-                'sector_id' => 'required|exists:sectors,id',
             ]);
 
             // Hash the password
@@ -326,7 +318,7 @@ class UserController extends Controller
         return $prefix . str_pad($number, 5, '0', STR_PAD_LEFT);
     }
 
-    private function generatePDACodeAccess()
+    public function generatePDACodeAccess()
     {
         $prefix = 'PDA';
 
@@ -416,8 +408,6 @@ class UserController extends Controller
                 'magasinier_id' => 'sometimes|nullable|exists:users,id',
                 'agency_id' => 'sometimes|nullable|exists:agencies,id',
                 'warehouse_id' => 'sometimes|nullable|exists:warehouses,id',
-                'zone_id' => 'sometimes|nullable|exists:zones,id',
-                'sector_id' => 'sometimes|nullable|exists:sectors,id',
             ]);
 
             // Find the user and update it

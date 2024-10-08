@@ -279,3 +279,9 @@ Route::post('/dashboards', [DashboardController::class, 'store']);
 Route::get('/dashboards/{id}', [DashboardController::class, 'show']);
 Route::put('/dashboards/{id}', [DashboardController::class, 'update']);
 Route::delete('/dashboards/{id}', [DashboardController::class, 'destroy']);
+
+// * Auth
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+Route::post('/scenarios-cases', [\App\Http\Controllers\AuthController::class, 'scenariosCases']);
+

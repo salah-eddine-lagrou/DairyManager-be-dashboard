@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->float('plafond_vendeur')->nullable();
             $table->string('pda_code_access')->unique()->nullable();
+            $table->boolean('pda_code_access_confirmed')->default(false);
             $table->string('printer_code')->nullable();
             $table->boolean('non_tolerated_sales_block')->nullable();
             $table->float('credit_limit')->nullable();
@@ -36,13 +37,11 @@ return new class extends Migration {
             $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('set null');
             $table->unsignedBigInteger('warehouse_id')->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('set null');
-            $table->unsignedBigInteger('zone_id')->nullable();
-            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('set null');
-            $table->unsignedBigInteger('sector_id')->nullable();
-            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('set null');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('login')->default(false)->nullable();
+            $table->string('device_uuid')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

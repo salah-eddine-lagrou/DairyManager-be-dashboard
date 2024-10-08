@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\TourneVendeur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
@@ -64,9 +65,10 @@ class ClientController extends Controller
                 'location' => 'required|string|max:255',
                 'location_gps_coordinates' => 'nullable|string|max:255',
                 'notification' => 'nullable|in:oui,non',
-                'created_by_id' => 'required|exists:users,id',  // ! vendeur who created the client to make the owner in tourne
-                'modified_by_id' => 'nullable|exists:users,id',
             ]);
+
+            $userId = Auth::id();
+            $validated['created_by_id'] = $userId;
 
             $vendeurId = $validated['created_by_id'];
             $tourneId = TourneVendeur::where('vendeur_id', $vendeurId)->first()->tourne_id;
@@ -75,9 +77,6 @@ class ClientController extends Controller
             $validated['client_assignment_commercial'] = true;
             $validated['status'] = 'en-attente';
             $validated['visit'] = 'oui';
-            $validated['credit_limit'] = 0.00;
-            $validated['credit_note_balance'] = 0.00;
-            $validated['global_limit'] = 0.00;
             // TODO generation de code ICE par une fonction dynamique WE'LL SEE ABOUT THAT !
             // $validated['ice'] = '';
             // TODO generate the qr_code for client make it logical

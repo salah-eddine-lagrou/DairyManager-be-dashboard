@@ -6,10 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $table = 'users';
 
@@ -19,6 +20,7 @@ class User extends Authenticatable
         'phone',
         'plafond_vendeur',
         'pda_code_access',
+        'pda_code_access_confirmed',  // new attribute
         'printer_code',
         'non_tolerated_sales_block',
         'credit_limit',
@@ -31,11 +33,11 @@ class User extends Authenticatable
         'magasinier_id',
         'agency_id',
         'warehouse_id',
-        'zone_id',
-        'sector_id',
         'email',
         'email_verified_at',
         'password',
+        'login',        // new attribute
+        'device_uuid'   // new attribute
     ];
 
     protected $hidden = [
@@ -72,14 +74,14 @@ class User extends Authenticatable
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function zone()
+    public function zones()
     {
-        return $this->belongsTo(Zone::class);
+        return $this->belongsToMany(Zone::class);
     }
 
-    public function sector()
+    public function sectors()
     {
-        return $this->belongsTo(Sector::class);
+        return $this->belongsToMany(Sector::class);
     }
 
     public function stocksAsVendeur()
@@ -199,6 +201,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Warehouse::class, 'modified_by_id');
     }
+
+    public function authenticationHistories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(AuthenticationHistory::class, 'users_authentication_histories')->withTimestamps();
+    }
+
 
 
 
